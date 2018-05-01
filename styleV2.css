@@ -1,0 +1,65 @@
+* {    
+    border: 0px;
+    margin: 0px;
+    style: 0px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+nav {
+    width: 100%;
+    height: 130px;
+    background-color: black;
+}
+
+#navigation {
+    display: inline-block;
+    font-size: 80px;
+    color: white;
+    margin: 0 300px;
+    width: 1200;
+    padding: 10px;
+    margin: 10px 50px;
+}
+
+#scoreboard {
+    height: 80px;
+    background-color: yellow;
+}
+#scoreboard > * {
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+#gamemode {
+    height: 80px;
+    background-color: green;
+}
+
+label {
+    color: orange;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+}
+
+#gamemode > input {
+    width: 150px;
+    height: 50px;
+    font-size: 1.1em;
+}
+#dimensions::placeholder {
+    padding: 10px;
+}
+
+#gameBoard {
+    width: 800px;
+    height: 800px;
+    background-color: rgba(20,20,20,0.4);
+}
+
+.gridElement {
+    display: inline-block;
+    background: blue;
+    position: absolute;
+    border: 2px solid red;
+}

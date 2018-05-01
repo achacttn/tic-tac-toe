@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styleV2.css">
+    <script src="js/jquery-3.3.1.min.js" defer></script>
+    <!-- scriptsV2 mostly for DOM manopulation -->
+    <script src="js/scriptsV2.js" defer></script> 
+    <!-- add game logic file after generalizing it -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic tac toe</title>
+</head>
+<body>
+    <nav>
+        <p id="navigation">Tic tac toe: dim 2n+1</p>
+    </nav>
+    <header id="headerelement">
+        <div id="scoreboard">
+            <p id="playerOne">Player 1 win count: 0</p>
+            <p id="playerTwo">Player 2 win count: 0</p>
+        </div>
+        <div id="gamemode">
+            <label for="dimension">Choose your dimensions:</label>
+            <input type="number" placeholder="Only n, not 2n+1 dimensions" id="dimensions">
+            <input type="button" value="Play!" id="playButton">
+        </div>
+    </header>
+    <div id="gameBoard"></div>
+</body>
+</html>
