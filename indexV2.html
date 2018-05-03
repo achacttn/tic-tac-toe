@@ -5,7 +5,7 @@
     <script src="js/jquery-3.3.1.min.js" defer></script>
     <!-- scriptsV2 mostly for DOM manopulation -->
     <script src="js/scriptsV2.js" defer></script> 
-    <!-- add game logic file after generalizing it -->
+    <script src="js/gamelogic.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
 </head>
 <body>
     <nav>
-        <p id="navigation">Tic tac toe: dim 2n+1</p>
+        <p id="navigation">Odd tac toe</p>
     </nav>
     <header id="headerelement">
         <div id="scoreboard">
@@ -22,8 +22,8 @@
             <p id="playerTwo">Player 2 win count: 0</p>
         </div>
         <div id="gamemode">
-            <label for="dimension">Choose your dimensions:</label>
-            <input type="number" placeholder="Only n, not 2n+1 dimensions" id="dimensions">
+            <label for="dimension">Choose your desired dimensions (minimum 3):</label>
+            <input type="number" placeholder="of the form 2n+1" id="dimensions">
             <input type="button" value="Play!" id="playButton">
         </div>
     </header>

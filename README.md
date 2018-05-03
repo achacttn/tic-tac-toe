@@ -28,3 +28,4 @@ Bonus
 - Networked multiplayer on firebase
 - Unbeatable AI
 
+* Inductive proof for value allocation
