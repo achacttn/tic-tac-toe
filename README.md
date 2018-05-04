@@ -1,6 +1,6 @@
 README:
 
-[game](https://achacttn.github.io/tic-tac-toe/index.html)
+[game](https://achacttn.github.io/tic-tac-toe/)
 
 - Overview:
 
