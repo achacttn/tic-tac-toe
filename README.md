@@ -1,31 +1,33 @@
-Upon click..
+README:
 
-1.
-- Check coordinates of click event.
-- If coordinates are outside <td>, do nothing.
-- If coordinates of click event are inside <td>, go to 2.
+https://achacttn.github.io/tic-tac-toe/index.html
 
-2.
-- Check if that board element is available (exists in boardElements array)
-- If it unavailable (does not exist in boardElements array), do nothing.
-- If it is available, then assign it to current player (add to their array).
+- Overview:
 
-3.
-- Once it has been assigned, check win condition
-- If win condition has been reached, end the game
-- If win condition has not been reached, change player
+Tic-tac-toe is a game where 2 players take turns placing markers on a 3x3 board.
+The goal is to get 3 markers in a row, column or diagonal.
+
+Instead of numbering the tic-tac-toe squares in increasing order from left-to-right and top-to-bottom, the numbers from 1 to n^2 can be arranged in such a way that the sum of any row, or column, or diagonal totals to a magic number.
+
+The magic number for a tic-tac-toe board of size nxn is given by n(n^2+1)/2.
+
+This means that tic-tac-toe is analogous to 2 players taking turns to select from a pile, cards which are numbered from 1 to n^2. The winner is the first player who is able to choose precisely n cards from their total choices which sum to the magic number.
 
 
-Bonus
-- Win counter (DOM)
-- Reset button
-- Custom marker
-- LocalStorage
-- Custom board size (CSS, game logic)
-    - 9 by 9
-    - game history tab
-    - game history slider bar
-- Networked multiplayer on firebase
-- Unbeatable AI
 
-* Inductive proof for value allocation
+- Instructions
+
+Input desired size of board and click play.
+
+
+
+- Major bugs
+    - Win condition bug: 
+        - If a combination of k numbers which sum to the magic number can be found, that player is declayed the victor.
+        - The current recursive function does not terminate when sub-arrays are of a length not suitable for determining win conditions.
+        - The sums of each sub-arrays' elements are the sole metric by which a winner is determined.
+        - For this reason, any permutations of a combination that already exists will only increase computation time.
+
+
+- Wishlist
+    - Fix recursive function, possibly add another function to hold arguments which will be fed into the recursive function.

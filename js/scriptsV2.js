@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    // game logic code
     const ttt = {
 
         // pass dimension from DOM to cdValue
@@ -18,10 +19,7 @@ $(document).ready(function(){
         // board element availability
         boardElements: [],
 
-        // for games with more than 2 players, can keep all
-        // players inside a single array, and mod the index
-        // to cycle through
-        // moves made by each player, in this example only one in each
+        // moves made by each player
         playerOne: [],
         playerTwo: [],
 
@@ -55,64 +53,87 @@ $(document).ready(function(){
             currentPlayer.push(this.boardElements.splice(currentMove, 1)[0]);
         },
 
-
+        // a player wins when a combination of exactly cdValue numbers from their array of moves
+        // sum to the magic number
+        // magic number for a tic-tac-toe board of dimensions n is given by
+        // n*(n^2+1)/2
         checkWin: function(){
             let currentPlayer = this.currentPlayerChecker();
-            if (currentPlayer.length === this.cdValue){
-                let totalSum = 0;
-                for (var i=0; i<currentPlayer.length; i++){
-                    totalSum += currentPlayer[i];
-                }
-                if (totalSum === this.cdValue*(this.cdValue*this.cdValue+1)/2){
-                    console.log(`Player ${this.currentPlayerTracker} has won!`);
-                }
-            }
-            if (currentPlayer.length > this.cdValue){
 
-                console.log("current player");
-                console.log(ttt.currentPlayerTracker);
-                // define parameters of recursive function here
-                // from set n, choose k combos
-                let nChoosek = function(dimension, playerMoves){
-                    let initialVars = playerMoves.length-dimension+1;
-                    console.log(`numbOfInits is ${initialVars}`);
-                    // only needs to be as many loop conds as initialVars
-                    let loopConds = [];
-                    for (var i=0; i<initialVars; i++){
-                        loopConds.unshift(currentPlayer.length - 1 - i);
-                    }
-                    console.log("moves made by current player");
-                    console.log(currentPlayer); // -> array of moves
-                    console.log("initialized variables end loop on the following indices of player.length");
-                    console.log(loopConds); // -> array
-    
-                    let nestChecker = function(numbOfInits, endingIndices){
-                        if (numbOfInits === 0){
-                            let result = "No win for you";
-                            // add an if statement here when loop ends to check
-                            // whether the current combination of values sum to magic number
-                        }
-                        else {
-                            let indexer = playerMoves.length-dimension+1
-                            for (var currentIndex = indexer - initialVars; currentIndex<playerMoves.length-indexer; currentIndex++){
-                                nestChecker(initialVars-1, loopConds.splice(1));
-                            }
-                        }
-                    }
+            // recursive function 
+            combinationFinder = function (array, dimension) {
 
-                    nestChecker(initialVars, loopConds);
+                // terminating condition for the remaining indexes
+                if (dimension > array.length || dimension < 1) {
+                    return [];
                 }
-                nChoosek(this.cdValue, this.currentPlayerChecker());
-            }
+                // simple check
+                if (dimension === array.length) {
+                    var totalSum = 0;
+                    for (var i = 0; i < array.length; i++) {
+                        totalSum += array[i];
+                    }
+                    if (totalSum === dimension * 0.5 * (dimension * dimension + 1)) {
+                        console.log(`Winner!!`);
+                        console.log(this.currentPlayerTracker);
+                        console.log('ret 1', array);
+                        return array;
+                    }
+                }
+                // trivial result when dimension = 1
+                if (dimension === 1) {
+                    let onePossibility = array.slice();
+
+                    console.log('ret 2', onePossibility);
+                    return onePossibility;
+                }
+                let allCombinations = [];
+                for (var i = 0; i < array.length + 1 - dimension; i++) {
+                    // keep initial index fixed
+                    // number of initial indices equals to difference between
+                    // array length and dimension
+                    let initialIndex = array.slice(i, i + 1);
+
+                    // remaining array is called again
+                    let remainingIndices = combinationFinder(array.slice(i + 1), dimension - 1);
+                    // iterate through non-empty indices and concatenate with fixed, initial index
+                    if (remainingIndices.length !== 0) {
+                        for (var j = 0; j < remainingIndices.length; j++) {
+                            console.log(initialIndex.concat(remainingIndices[j]));
+                            allCombinations.push(initialIndex.concat(remainingIndices[j]));
+                        }
+                    } else {
+                        return allCombinations;
+                    }
+                }
+                // go through the allCombinations array
+                // see if the sums of subarrays in allCombinations result
+                // in the magic number
+                for (var eachComb = 0; eachComb < allCombinations.length; eachComb++) {
+                    var runningTotal = 0;
+                    for (var combInd = 0; combInd < allCombinations[eachComb].length; combInd++) {
+                        runningTotal += Number(allCombinations[combInd]);
+                    }
+                    if (runningTotal = this.cdValue * (this.cdValue * this.cdValue + 1) / 2) {
+                        console.log("Winner!");
+                        console.log('ret 3', allCombinations[eachComb]);
+                        return allCombinations[eachComb];
+                    }
+                }
+                return allCombinations;
+            };
+
+            combinationFinder(this.currentPlayerChecker(), this.cdValue);
         }
     }
-    // method to reset board state, and player moves
 
-
+    // DOM code
     const dimension = document.getElementById("dimensions");
     const gameBoard = document.getElementById("gameBoard");
     const playButton = document.getElementById("playButton");
 
+    // resets grid when a new dimension is entered
+    // called whenever new grid is created
     const clearGrid = function () {
         let allSquares = document.getElementsByClassName("gridElement");
         while (allSquares.length > 0) {
@@ -120,9 +141,9 @@ $(document).ready(function(){
         }
     }
     const createGrid = function () {
-        // add methods to clear board elements as well
         clearGrid();
         
+        // converts any numerical input to positive odd integer >= 3
         let dim = Number(dimension.value);
         dim = Math.round(Math.abs(dim),0);
         if (dim < 3){
@@ -154,39 +175,37 @@ $(document).ready(function(){
                 newSquare.style.width = (boardWidth / colNumber) + "px";
                 newSquare.style.top = (boardHeight / rowNumber) * i + gameBoardOffset + "px";
                 newSquare.style.left = (boardWidth / colNumber) * j + "px";
+                newSquare.style["font-size"] = (boardHeight/rowNumber) + "px";
+                newSquare.style["line-height"] = (boardHeight/rowNumber) + "px";
                 // see README induction proof for value allocation
                 newSquare.id = `${dim * (((i + 1) + (j + 1) - 1 + Math.floor(dim / 2)) % dim) + (((i + 1) + 2 * (j + 1) - 2) % dim) + 1}`;
 
                 let clickEvents = function (event) {
-                    // returns value of square
+                    // returns value of each square's id
                     var clickedVal = Number(event.path[0].getAttribute("id"));
-                    console.log(clickedVal);
                     if (ttt.validMoveChecker(clickedVal)){
                         ttt.changeBoardState(clickedVal);
+                        if (ttt.currentPlayerTracker > 0){
+                            newSquare.innerHTML = "X";
+                        }
+                        else {
+                            newSquare.innerHTML = "O"
+                        }
                         // check win condition
+                        console.log(ttt.currentPlayerChecker());
                         ttt.checkWin();
                         ttt.changeTurn();
-
                     }
                     else {
                         alert("invalid move bro");
                     }
-
-
-
-
-
                 }
                 newSquare.addEventListener("click", clickEvents);
                 gameBoard.appendChild(newSquare);
             }
         }
+        // communicates to game logic
         ttt.generateBoardElements(dim);
     }
-
     playButton.addEventListener("click", createGrid);
-
-
-
-    
 });
