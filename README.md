@@ -31,3 +31,7 @@ Input desired size of board and click play.
 
 - Wishlist
     - Fix recursive function, possibly add another function to hold arguments which will be fed into the recursive function.
+
+- Features
+    - Window
+    - tic-ception
