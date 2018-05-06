@@ -58,72 +58,32 @@ $(document).ready(function(){
         // magic number for a tic-tac-toe board of dimensions n is given by
         // n*(n^2+1)/2
         checkWin: function(){
-            let currentPlayer = this.currentPlayerChecker();
-
-            // recursive function 
-            combinationFinder = function (array, dimension) {
-
-                // terminating condition for the remaining indexes
-                if (dimension > array.length || dimension < 1) {
-                    return [];
-                }
-                // simple check
-                if (dimension === array.length) {
-                    var totalSum = 0;
-                    for (var i = 0; i < array.length; i++) {
-                        totalSum += array[i];
+            const currentMoves = this.currentPlayerChecker();
+            const currentComb = [];
+            let cdVar = this.cdValue;
+            // recursive function to find combinations of all numbers
+            
+            const combinationFinder = function(array, cd, indexer){
+                if (cd === 0){
+                    // check if combination sums to the magic number
+                    console.log(currentComb);
+                    let tempSum = 0;
+                    for (var i=0; i<currentComb.length; i++){
+                        tempSum += currentComb[i];
                     }
-                    if (totalSum === dimension * 0.5 * (dimension * dimension + 1)) {
-                        console.log(`Winner!!`);
-                        console.log(this.currentPlayerTracker);
-                        console.log('ret 1', array);
-                        return array;
+                    console.log(tempSum);
+                    if (tempSum === this.cdValue*(this.cdValue*this.cdValue+1)/2){
+                        alert(`Player ${this.currentPlayerTracker} is the winner!`)
                     }
+                    return;
                 }
-                // trivial result when dimension = 1
-                if (dimension === 1) {
-                    let onePossibility = array.slice();
 
-                    console.log('ret 2', onePossibility);
-                    return onePossibility;
+                for (var i=indexer; i<array.length+1-cd; i++){
+                    currentComb[this.cdValue-cd] = array[i];
+                    combinationFinder(array, cd-1, i+1);
                 }
-                let allCombinations = [];
-                for (var i = 0; i < array.length + 1 - dimension; i++) {
-                    // keep initial index fixed
-                    // number of initial indices equals to difference between
-                    // array length and dimension
-                    let initialIndex = array.slice(i, i + 1);
-
-                    // remaining array is called again
-                    let remainingIndices = combinationFinder(array.slice(i + 1), dimension - 1);
-                    // iterate through non-empty indices and concatenate with fixed, initial index
-                    if (remainingIndices.length !== 0) {
-                        for (var j = 0; j < remainingIndices.length; j++) {
-                            console.log(initialIndex.concat(remainingIndices[j]));
-                            allCombinations.push(initialIndex.concat(remainingIndices[j]));
-                        }
-                    } else {
-                        return allCombinations;
-                    }
-                }
-                // go through the allCombinations array
-                // see if the sums of subarrays in allCombinations result
-                // in the magic number
-                for (var eachComb = 0; eachComb < allCombinations.length; eachComb++) {
-                    var runningTotal = 0;
-                    for (var combInd = 0; combInd < allCombinations[eachComb].length; combInd++) {
-                        runningTotal += Number(allCombinations[combInd]);
-                    }
-                    if (runningTotal = this.cdValue * (this.cdValue * this.cdValue + 1) / 2) {
-                        console.log("Winner!");
-                        console.log('ret 3', allCombinations[eachComb]);
-                        return allCombinations[eachComb];
-                    }
-                }
-                return allCombinations;
-            };
-
-            combinationFinder(this.currentPlayerChecker(), this.cdValue);
+            }
+            combinationFinder(currentMoves, cdVar,0)
         }
     }
 
