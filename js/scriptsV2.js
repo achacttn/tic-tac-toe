@@ -64,6 +64,7 @@ $(document).ready(function(){
             // const that =
             let cdVar = this.cdValue;
             
+            // this fixed
             // recursive function to find combinations of all numbers
             const combinationFinder = (array, cd, indexer) => {
                 if (cd === 0){
