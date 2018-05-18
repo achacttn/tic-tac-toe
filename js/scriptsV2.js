@@ -60,10 +60,12 @@ $(document).ready(function(){
         checkWin: function(){
             const currentMoves = this.currentPlayerChecker();
             const currentComb = [];
-            let cdConstant = this.cdValue
+            // let cdConstant = this.cdValue
+            // const that =
             let cdVar = this.cdValue;
+            
             // recursive function to find combinations of all numbers
-            const combinationFinder = function(array, cd, indexer){
+            const combinationFinder = (array, cd, indexer) => {
                 if (cd === 0){
                     // check if combination sums to the magic number
                     console.table(currentComb);
@@ -79,10 +81,9 @@ $(document).ready(function(){
                 }
 
                 for (var i=indexer; i<array.length+1-cd; i++){
-                    // at the moment, this line below is breaking
-                    // this.cdValue is not puling value, and therefore index of currentComb becomes NaN
-                    // wow... setting another variable cdConstant fixed the problem !!!!
-                    currentComb[cdConstant-cd] = array[i];
+                    // this is an anonymous function, "this" will reference the global object
+                    // console.log('this', this, this.cdValue);
+                    currentComb[this.cdValue-cd] = array[i];
                     combinationFinder(array, cd-1, i+1);
                 }
             }

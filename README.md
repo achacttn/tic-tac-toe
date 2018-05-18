@@ -19,7 +19,8 @@ This means that tic-tac-toe is analogous to 2 players taking turns to select fro
 
 Input desired size of board and click play.
 
-
+Changelog (Friday 11 May 2018)
+- Fixed recursive function (victory calculation correctly working)
 
 - Major bugs
     - Win condition bug: 
