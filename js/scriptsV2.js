@@ -143,7 +143,8 @@ $(document).ready(function(){
                 newSquare.style.left = (boardWidth / colNumber) * j + "px";
                 newSquare.style["font-size"] = (boardHeight/rowNumber) + "px";
                 newSquare.style["line-height"] = (boardHeight/rowNumber) + "px";
-                newSquare.id = `${dim * (((i + 1) + (j + 1) - 1 + ((dim-1)/ 2)) % dim) + (((i + 1) + 2 * (j + 1) - 2) % dim) + 1}`;
+                newSquare.id = `${ dim * (((i + 1) + (j + 1) - 1 + Math.floor(dim / 2)) % dim) + (((i + 1) + 2 * (j + 1) - 2) % dim) + 1 }`;
+                newSquare.innerHTML = `${newSquare.id}`
 
                 let clickEvents = function (event) {
                     // returns value of each square's id
