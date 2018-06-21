@@ -1,3 +1,4 @@
+// fix checkWin function
 $(document).ready(function(){
     // game logic code
     const ttt = {
