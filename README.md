@@ -24,6 +24,7 @@ Changelog (Friday 11 May 2018)
 
 - Major bugs
     -FIRST PRIORITY: Combination for checkWin() function MUST see if a combination is in a row, column or diagonal
+    -Definition of magic square does not preclude other combinations other than sums of rows/columns/diagonals from resulting in the magic sum
     - Win condition bug: 
         - If a combination of k numbers which sum to the magic number can be found, that player is declayed the victor.
         - The current recursive function does not terminate when sub-arrays are of a length not suitable for determining win conditions.
